@@ -1,0 +1,892 @@
+/* ==========================================================================
+   KISANCONNECT — SMART AGRICULTURE & FARMER EMPOWERMENT PLATFORM
+   ROTATECH 2026 | Team Pixel | Problem Statement ID: 202606
+   Modern Agritech Design System (Glassmorphic Emerald + High Contrast)
+   V2 — Professional Cinematic UI with GSAP-ready animation hooks
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* ---------- DESIGN TOKENS ---------- */
+:root {
+  --primary-emerald: #047857;
+  --primary-emerald-dark: #064E3B;
+  --primary-emerald-light: #10B981;
+  --accent-amber: #D97706;
+  --accent-gold: #F59E0B;
+  --bg-sand: #F8FAF7;
+  --bg-card: #FFFFFF;
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --border-subtle: #E2E8F0;
+  --border-emerald: #A7F3D0;
+
+  --shadow-card: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-card-hover: 0 20px 40px -8px rgba(4,120,87,.12), 0 8px 16px -4px rgba(4,120,87,.06);
+  --shadow-elevated: 0 10px 25px -5px rgba(4,120,87,.12), 0 6px 10px rgba(0,0,0,.04);
+  --radius-card: 1rem;
+  --radius-card-lg: 1.25rem;
+  --transition-smooth: cubic-bezier(.4,0,.2,1);
+  --transition-spring: cubic-bezier(.16,1,.3,1);
+}
+
+/* ---------- RESET & BASE ---------- */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+::selection { background: rgba(16,185,129,.25); color: var(--text-main); }
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-sand);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+  letter-spacing: -.01em;
+  overflow-x: hidden;
+}
+
+/* ---------- CUSTOM SCROLLBAR (Emerald) ---------- */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary-emerald-light), var(--primary-emerald)); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-emerald-dark); }
+
+/* ---------- TYPOGRAPHY ---------- */
+.font-devanagari { font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', sans-serif; }
+.font-mono-code  { font-family: 'JetBrains Mono', monospace; }
+
+h1,h2,h3,h4 { letter-spacing: -.02em; line-height: 1.25; }
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-emerald-light), #0D9488, var(--primary-emerald));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* ==========================================================================
+   HERO SECTION — Cinematic Full-Width with Animated Farm Video
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #064E3B;
+  overflow: hidden;
+  padding: 3.5rem 1rem 4.5rem;
+}
+
+/* Animated Farm Drone Video Backdrop */
+.hero-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: brightness(0.85) contrast(1.18) saturate(1.25);
+  transform: scale(1.05);
+  animation: heroKenBurns 25s ease-in-out infinite alternate;
+}
+@keyframes heroKenBurns {
+  0%   { transform: scale(1.05) translate(0, 0); }
+  50%  { transform: scale(1.12) translate(-1%, -1%); }
+  100% { transform: scale(1.05) translate(1%, 0); }
+}
+
+.hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,78,59,.78) 0%, rgba(4,120,87,.55) 45%, rgba(15,23,42,.92) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animated Glowing Border Beam around Hero */
+.hero-animated-border {
+  position: absolute;
+  inset: 0;
+  border-bottom: 3.5px solid transparent;
+  background: linear-gradient(90deg, #10B981, #F59E0B, #10B981, #06B6D4) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 3;
+  animation: borderGlowFlow 6s linear infinite;
+}
+@keyframes borderGlowFlow {
+  0%   { filter: drop-shadow(0 0 8px rgba(16,185,129,.7)); }
+  50%  { filter: drop-shadow(0 0 16px rgba(245,158,11,.8)); }
+  100% { filter: drop-shadow(0 0 8px rgba(16,185,129,.7)); }
+}
+
+/* Grain texture overlay */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  opacity: .35;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 10;
+  max-width: 72rem;
+  width: 100%;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: #FFFFFF;
+  text-shadow: 0 0 60px rgba(16,185,129,.35), 0 2px 4px rgba(0,0,0,.3);
+  letter-spacing: -.03em;
+  line-height: 1.15;
+  margin-bottom: .75rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(.85rem, 2vw, 1.1rem);
+  color: rgba(167,243,208,.85);
+  font-weight: 500;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  animation: fadeIn .8s var(--transition-spring) .3s both;
+}
+
+/* Impact counter row */
+.hero-counters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 640px) {
+  .hero-counters { grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+}
+
+.hero-counter {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167,243,208,.15);
+  border-radius: var(--radius-card);
+  padding: 1.25rem 1rem;
+  transition: transform .3s var(--transition-spring), border-color .3s;
+}
+.hero-counter:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: rgba(167,243,208,.4);
+}
+
+.hero-counter-value {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+.hero-counter-label {
+  font-size: .75rem;
+  color: rgba(167,243,208,.7);
+  font-weight: 600;
+  margin-top: .35rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .85rem 2rem;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: .95rem;
+  color: var(--primary-emerald-dark);
+  background: linear-gradient(135deg, #A7F3D0, #6EE7B7, #34D399);
+  box-shadow: 0 4px 20px rgba(16,185,129,.35);
+  border: none;
+  cursor: pointer;
+  transition: all .3s var(--transition-spring);
+}
+.hero-cta:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(16,185,129,.45);
+}
+
+/* Wave divider at hero bottom */
+.section-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 3;
+}
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: 48px;
+}
+@media (min-width: 768px) {
+  .section-divider svg { height: 64px; }
+}
+
+
+/* ==========================================================================
+   CARDS — Depth System
+   ========================================================================== */
+.agri-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: all .35s var(--transition-smooth);
+  position: relative;
+}
+.agri-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  transition: border-color .35s;
+  pointer-events: none;
+}
+.agri-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-emerald);
+}
+.agri-card:hover::before {
+  border-color: rgba(16,185,129,.15);
+}
+
+.agri-card-elevated {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 50%, #ECFDF5 100%);
+  border: 1.5px solid #BBF7D0;
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--shadow-elevated);
+  transition: all .35s var(--transition-smooth);
+}
+.agri-card-elevated:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -12px rgba(4,120,87,.16), 0 8px 16px rgba(0,0,0,.04);
+  border-color: var(--primary-emerald-light);
+}
+
+.agri-glass {
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,.55);
+  transition: border-color .3s, backdrop-filter .3s;
+}
+.agri-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(167,243,208,.08), transparent 60%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.agri-glass:hover::after { opacity: 1; }
+
+/* Frosted Panel — heavier glass */
+.frosted-panel {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(28px) saturate(1.8);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: var(--radius-card-lg);
+  box-shadow: 0 8px 32px rgba(0,0,0,.06);
+}
+
+
+/* ==========================================================================
+   NAVIGATION TABS — Desktop
+   ========================================================================== */
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .625rem 1rem;
+  border-radius: .75rem;
+  font-weight: 700;
+  font-size: .875rem;
+  transition: all .25s var(--transition-smooth);
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle shimmer underlay on hover */
+.nav-tab-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(16,185,129,.08) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform .5s;
+  pointer-events: none;
+}
+.nav-tab-btn:hover::after { transform: translateX(100%); }
+
+.nav-tab-btn.active {
+  background: var(--primary-emerald);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(4,120,87,.3);
+  border-color: #059669;
+}
+.nav-tab-btn:not(.active) {
+  background: #FFFFFF;
+  color: #334155;
+  border-color: var(--border-subtle);
+}
+.nav-tab-btn:not(.active):hover {
+  background: #ECFDF5;
+  color: var(--primary-emerald);
+  border-color: var(--border-emerald);
+}
+
+
+/* ==========================================================================
+   TAB CONTENT TRANSITIONS
+   ========================================================================== */
+.tab-content-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .45s var(--transition-spring), transform .45s var(--transition-spring);
+}
+.tab-content-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   WEATHER MODULE
+   ========================================================================== */
+.weather-hero-gradient {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-radius: var(--radius-card-lg);
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(16,185,129,0.45);
+  box-shadow: 0 16px 36px -8px rgba(0,0,0,0.35), 0 0 20px rgba(16,185,129,0.12);
+  transition: all 0.4s ease;
+}
+.weather-hero-gradient:hover {
+  border-color: rgba(16,185,129,0.75);
+  box-shadow: 0 22px 48px -8px rgba(0,0,0,0.45), 0 0 28px rgba(16,185,129,0.25);
+}
+.weather-hero-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(253,224,71,.2) 0%, transparent 60%),
+              radial-gradient(ellipse at 10% 80%, rgba(16,185,129,.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+.weather-hero-gradient::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(253,224,71,.28) 0%, transparent 70%);
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Weather Icon Animations */
+.weather-icon-animated {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+.weather-icon-animated.sun { animation: spinSun 12s linear infinite; }
+.weather-icon-animated.rain { animation: fallRain 1.5s ease-in infinite; }
+.weather-icon-animated.cloud { animation: driftCloud 8s ease-in-out infinite alternate; }
+
+@keyframes spinSun {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes fallRain {
+  0%   { transform: translateY(-4px); opacity: .6; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(4px); opacity: .6; }
+}
+@keyframes driftCloud {
+  0%   { transform: translateX(-6px); }
+  100% { transform: translateX(6px); }
+}
+
+
+/* ==========================================================================
+   MANDI MODULE
+   ========================================================================== */
+.price-trend-bar {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--primary-emerald-light), var(--primary-emerald));
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: growBar .8s var(--transition-spring) forwards;
+}
+@keyframes growBar {
+  to { transform: scaleX(1); }
+}
+
+/* Table row hover emerald accent */
+.mandi-table tr {
+  position: relative;
+  transition: background .25s;
+}
+.mandi-table tr::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--primary-emerald);
+  border-radius: 0 4px 4px 0;
+  transform: scaleY(0);
+  transition: transform .25s var(--transition-spring);
+}
+.mandi-table tr:hover { background: #F0FDF4; }
+.mandi-table tr:hover::before { transform: scaleY(1); }
+
+
+/* ==========================================================================
+   MANDI PRICE BADGES
+   ========================================================================== */
+.badge-price-up {
+  background-color: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #86EFAC;
+}
+.badge-price-down {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FCA5A5;
+}
+.badge-price-stable {
+  background-color: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+
+/* ==========================================================================
+   PULSE BEACON
+   ========================================================================== */
+.pulse-beacon { position: relative; }
+.pulse-beacon::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #EF4444;
+  animation: pulse-ring 1.5s cubic-bezier(.215,.61,.355,1) infinite;
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(.95); box-shadow: 0 0 0 0 rgba(239,68,68,.7); }
+  70%  { transform: scale(1);   box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+  100% { transform: scale(.95); box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+
+
+/* ==========================================================================
+   AI CROP DOCTOR — Scan & Upload
+   ========================================================================== */
+.scan-dropzone {
+  border: 2px dashed var(--primary-emerald-light);
+  background: #F0FDF4;
+  border-radius: var(--radius-card);
+  transition: all .3s var(--transition-smooth);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+/* Marching ants animation */
+.scan-dropzone::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px dashed var(--primary-emerald-light);
+  animation: marchingAnts 1.2s linear infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.scan-dropzone:hover::before { opacity: 1; }
+
+.scan-dropzone:hover {
+  background: #DCFCE7;
+  border-color: #059669;
+  box-shadow: 0 0 24px rgba(16,185,129,.18);
+}
+
+@keyframes marchingAnts {
+  to { stroke-dashoffset: -16; border-color: var(--primary-emerald); }
+}
+
+/* Scanning overlay */
+.diagnosis-scanning {
+  position: relative;
+  overflow: hidden;
+}
+.diagnosis-scanning::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primary-emerald-light), transparent);
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+
+/* ==========================================================================
+   STAT BADGE — Live Data Indicator
+   ========================================================================== */
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .65rem;
+  border-radius: 9999px;
+  font-size: .7rem;
+  font-weight: 700;
+  background: rgba(16,185,129,.12);
+  color: var(--primary-emerald);
+  border: 1px solid rgba(16,185,129,.2);
+  animation: counterPulse 2s ease-in-out infinite;
+}
+
+
+/* ==========================================================================
+   MOBILE BOTTOM NAVIGATION
+   ========================================================================== */
+.mobile-bottom-nav-btn {
+  transition: all .25s var(--transition-spring);
+  position: relative;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.mobile-bottom-nav-btn.active-mobile,
+.mobile-bottom-nav-btn[class*="text-emerald"] {
+  transform: scale(1.08);
+}
+/* Active dot indicator */
+.mobile-bottom-nav-btn.active-mobile::after,
+.mobile-bottom-nav-btn[class*="text-emerald-700"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary-emerald);
+}
+
+
+/* ==========================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
+
+/* Original fade-in preserved */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn .3s var(--transition-spring) forwards;
+}
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+
+/* Shimmer — skeleton loading */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Slide In Up */
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slideInUp .6s var(--transition-spring) both;
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-left {
+  animation: slideInLeft .6s var(--transition-spring) both;
+}
+
+/* Gradient Shift — hero & weather */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Counter Pulse — live badge */
+@keyframes counterPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+
+/* Scan Line — AI Doctor */
+@keyframes scanLine {
+  0%   { top: 0; }
+  50%  { top: 100%; }
+  100% { top: 0; }
+}
+
+/* ==========================================================================
+   OFF-CANVAS MENU DRAWER
+   ========================================================================== */
+#side-menu-backdrop.open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+#side-menu-drawer.open {
+  transform: translateX(0) !important;
+}
+
+/* ==========================================================================
+   ANIMATED WEATHER VIDEO & MOTION SKY BACKDROP
+   ========================================================================== */
+.weather-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+.weather-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.82;
+  mix-blend-mode: normal;
+  filter: brightness(0.90) contrast(1.15) saturate(1.20);
+  transition: opacity 0.8s ease, filter 0.8s ease;
+}
+.weather-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  /* Crystal-clear dark vignette that preserves vivid video colors while keeping white text 100% sharp */
+  background: linear-gradient(180deg, rgba(15,23,42,0.42) 0%, rgba(15,23,42,0.18) 35%, rgba(15,23,42,0.85) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Live Weather Condition Pill */
+.weather-condition-pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.25);
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.2s var(--transition-smooth);
+}
+.weather-condition-pill.active {
+  background: #FFFFFF;
+  color: #064E3B;
+  border-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.weather-condition-pill:hover:not(.active) {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Rain Particle Simulation Overlay */
+.rain-animation-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0) 100%);
+  background-size: 2px 24px;
+  animation: rainShower 0.65s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+.rain-animation-layer.active {
+  opacity: 0.35;
+}
+@keyframes rainShower {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 20% 100%; }
+}
+
+/* ==========================================================================
+   AUTHENTICATION & TERMS MODAL STYLING (256-Bit Security & DPDP Compliance)
+   ========================================================================== */
+.custom-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--transition-smooth);
+}
+
+.custom-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.custom-modal-card {
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: var(--radius-card-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.96) translateY(12px);
+  transition: transform 0.25s var(--transition-spring);
+}
+
+.custom-modal-backdrop.open .custom-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.custom-modal-card.card-wide {
+  max-width: 44rem;
+}
+
+/* Security Badges & DPDP Floating Toast */
+.dpdp-floating-toast {
+  position: fixed;
+  bottom: 4.5rem;
+  left: 1rem;
+  z-index: 45;
+  max-width: 26rem;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  border-radius: 1rem;
+  padding: 0.85rem 1rem;
+  color: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s var(--transition-spring), opacity 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .dpdp-floating-toast {
+    left: 0.75rem;
+    right: 0.75rem;
+    max-width: none;
+    bottom: 4.25rem;
+  }
+}
+
+.dpdp-floating-toast.dismissed {
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   PRINT STYLING
+   ========================================================================== */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #FFFFFF; color: #000000; }
+  .agri-card { box-shadow: none; border: 1px solid #CCCCCC; }
+  .hero-section { display: none; }
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY — Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-section { animation: none; background-size: 100% 100%; }
+  .weather-hero-gradient { animation: none; background-size: 100% 100%; }
+}
